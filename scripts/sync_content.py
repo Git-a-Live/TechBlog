@@ -8,7 +8,9 @@
 from __future__ import annotations
 
 import argparse
+import os
 import shutil
+import stat
 import sys
 import tempfile
 from pathlib import Path
@@ -41,6 +43,16 @@ Android、Kotlin、Compose、Flutter 与计算机基础的学习笔记。
 """
 
 
+def remove_tree(path: Path) -> None:
+    """删除目录；Windows 下 copytree 会保留只读属性，需先去掉再删。"""
+
+    def handle(func, target, error):
+        os.chmod(target, stat.S_IWRITE)
+        func(target)
+
+    shutil.rmtree(path, onexc=handle)
+
+
 def iter_notes():
     for path in sorted(ROOT.rglob("*.md")):
         rel = path.relative_to(ROOT)
@@ -62,7 +74,7 @@ def main() -> int:
 
     content = Path(args.out).expanduser().resolve()
     if content.exists():
-        shutil.rmtree(content)
+        remove_tree(content)
     content.mkdir(parents=True)
 
     count = 0
