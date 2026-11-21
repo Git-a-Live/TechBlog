@@ -40,11 +40,11 @@ jobs:
 
       - name: Install Quartz plugins
         working-directory: site
-        run: npx quartz plugin install
+        run: node quartz/bootstrap-cli.mjs plugin install
 
       - name: Build site
         working-directory: site
-        run: npx quartz build -d "${{ runner.temp }}/techblog-content"
+        run: node quartz/bootstrap-cli.mjs build -d "${{ runner.temp }}/techblog-content"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
