@@ -1,0 +1,14 @@
+# 智能体工作目录（含备份与临时文件）
+.workbuddy/
+
+# Obsidian 本地配置
+.obsidian/
+
+# Quartz 构建产物与依赖
+site/node_modules/
+site/public/
+site/.quartz/
+site/.quartz-cache/
+site/content/
+
+.DS_Store
